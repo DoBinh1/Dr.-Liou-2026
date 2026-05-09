@@ -1,4 +1,4 @@
-"""Generate 01_exploration.ipynb - HUSTmotor exploration starter notebook (v2).
+"""Generate 01_exploration.ipynb - HUSTmotor exploration starter notebook (v2, English).
 
 v2 adds:
   - Deeper signal processing: cepstrum, spectral kurtosis (kurtogram),
@@ -50,27 +50,27 @@ cells.append(
     md(
         "# HUSTmotor Multimodal Dataset — Exploration Notebook (v2)",
         "",
-        "**Mục đích**: starter notebook cho dataset understanding + signal processing nâng cao + baseline.",
+        "**Purpose**: starter notebook for dataset understanding + advanced signal processing + baselines.",
         "",
         "Pipeline:",
-        "1. **Section 1–4**: Setup, loader, quick inspection",
-        "2. **Section 5–8**: Visualization cơ bản (raw, FFT, STFT, HES)",
-        "3. **Section 9**: Deeper signal processing",
-        "   - 9a. Spectral Kurtosis / Kurtogram → optimal bandpass cho envelope",
-        "   - 9b. Cepstrum analysis → phát hiện harmonic family",
+        "1. **Sections 1–4**: setup, loader, quick inspection",
+        "2. **Sections 5–8**: basic visualization (raw, FFT, STFT, HES)",
+        "3. **Section 9**: deeper signal processing",
+        "   - 9a. Spectral Kurtosis / Kurtogram → optimal bandpass for envelope",
+        "   - 9b. Cepstrum analysis → harmonic family detection",
         "   - 9c. CWT (Continuous Wavelet Transform) — Morlet wavelet",
         "   - 9d. WPT (Wavelet Packet) energy distribution",
         "   - 9e. Coherence vibration ↔ acoustic",
         "   - 9f. Cross-condition spectrum comparison (same fault, 4 speeds)",
         "   - 9g. Order spectrum (speed normalization)",
-        "4. **Section 10–14**: Handcrafted features + t-SNE + per-class stats + cross-condition",
-        "5. **Section 15**: Segmentation utility (train/val/test splits.npz)",
-        "6. **Section 16–17**: Baseline experiments",
+        "4. **Sections 10–14**: handcrafted features + t-SNE + per-class stats + cross-condition",
+        "5. **Section 15**: segmentation utility (train/val/test splits.npz)",
+        "6. **Sections 16–17**: baseline experiments",
         "   - 16. XGBoost (intra-condition, pooled, leave-one-condition-out DG)",
         "   - 17. WDCNN deep baselines (vib/ac/dual-stream, pooled and LOCO)",
-        "7. **Section 18**: Results summary & next steps",
+        "7. **Section 18**: results summary & next steps",
         "",
-        "**Tham chiếu**: `TECHNICAL_REPORT.md`. Baseline runner: `_run_pipeline.py`.",
+        "**See also**: `TECHNICAL_REPORT.md`. Baseline runner: `_run_pipeline.py`.",
     )
 )
 
@@ -143,9 +143,9 @@ cells.append(
 # ============================================================
 cells.append(
     md(
-        "## 3. Data Loader",
+        "## 3. Data loader",
         "",
-        "Format file: header ~17 dòng metadata, sau đó tab-separated `Time, X, Y, Z, Sound`.",
+        "File format: ~17 lines of header metadata, then tab-separated `Time, X, Y, Z, Sound`.",
     )
 )
 cells.append(
@@ -181,7 +181,7 @@ cells.append(
 # ============================================================
 # 4. Quick inspection
 # ============================================================
-cells.append(md("## 4. Quick inspection — load 1 file"))
+cells.append(md("## 4. Quick inspection — load one file"))
 cells.append(
     code(
         "sample = load_motor_file(DATA_DIR / 'H_30HZ.txt')",
@@ -196,7 +196,7 @@ cells.append(
 # ============================================================
 # 5. Raw waveform 4 channels
 # ============================================================
-cells.append(md("## 5. Raw waveform — 4 channels (zoom 2 cycles)"))
+cells.append(md("## 5. Raw waveform — 4 channels (zoom on 2 cycles)"))
 cells.append(
     code(
         "def plot_raw_4ch(s, n_show=None):",
@@ -221,7 +221,7 @@ cells.append(
 # ============================================================
 # 6. Compare 6 classes at 30 Hz
 # ============================================================
-cells.append(md("## 6. So sánh 6 classes (cùng 30 Hz)"))
+cells.append(md("## 6. Compare 6 classes (same condition = 30 Hz)"))
 cells.append(
     code(
         "fig, axes = plt.subplots(6, 2, figsize=(13, 11), sharex='col')",
@@ -274,7 +274,7 @@ cells.append(
 # ============================================================
 # 8. Spectrogram
 # ============================================================
-cells.append(md("## 8. STFT Spectrogram — 6 classes @ 30 Hz"))
+cells.append(md("## 8. STFT spectrogram — 6 classes @ 30 Hz"))
 cells.append(
     code(
         "fig, axes = plt.subplots(2, 3, figsize=(15, 7))",
@@ -296,18 +296,18 @@ cells.append(
 # ============================================================
 cells.append(
     md(
-        "## 9. Deeper Signal Processing",
+        "## 9. Deeper signal processing",
         "",
-        "Phần này đi sâu vào công cụ xử lý tín hiệu cho fault diagnosis:",
+        "This section dives into signal-processing tools for fault diagnosis:",
         "",
-        "| Sub | Tool | Mục đích | Fault target |",
+        "| Sub | Tool | Purpose | Fault target |",
         "|---|---|---|---|",
-        "| 9a | Spectral Kurtosis (Kurtogram) | tự động chọn resonance band | **BF** |",
-        "| 9b | Cepstrum | phát hiện harmonic family / sideband | BROKEN, gear-mesh-like |",
+        "| 9a | Spectral Kurtosis (Kurtogram) | auto-select resonance band | **BF** |",
+        "| 9b | Cepstrum | detect harmonic family / sidebands | BROKEN, gear-mesh-like |",
         "| 9c | CWT (Morlet) | adaptive time-frequency | impulsive transients |",
         "| 9d | WPT energy | compact band-energy fingerprint | all (texture) |",
-        "| 9e | Coherence vib↔ac | đánh giá information sharing | sanity for fusion |",
-        "| 9f | Cross-condition spectrum | thấy tận mắt domain shift | DG analysis |",
+        "| 9e | Coherence vib↔ac | assess information sharing | sanity for fusion |",
+        "| 9f | Cross-condition spectrum | see domain shift directly | DG analysis |",
         "| 9g | Order spectrum | speed-invariant view | DG mitigation |",
     )
 )
@@ -317,13 +317,13 @@ cells.append(
     md(
         "### 9a. Spectral Kurtosis & Kurtogram",
         "",
-        "**Vấn đề**: HES yêu cầu chọn bandpass quanh resonance — chọn sai band → mất signature.",
+        "**Problem**: HES requires choosing a bandpass around the resonance — a wrong band loses the signature.",
         "",
-        "**Giải pháp**: Spectral Kurtosis (Antoni 2006) đo kurtosis của signal sau khi filter qua mỗi band [f, f+Δf]. Band có kurtosis cao nhất là band excited mạnh nhất bởi impulsive bearing — đó là band tối ưu cho HES.",
+        "**Solution**: Spectral Kurtosis (Antoni 2006) measures the kurtosis of the signal after filtering through each band [f, f+Δf]. The band with the highest kurtosis is the one most strongly excited by impulsive bearing content — that is the optimal HES bandpass.",
         "",
-        "**Kurtogram**: hiển thị SK trên grid (level × center-frequency) → chọn (level\\*, fc\\*) tối ưu.",
+        "**Kurtogram**: shows SK on a grid (level × center frequency) → pick the optimal (level\\*, fc\\*).",
         "",
-        "Hữu dụng nhất khi BF có signature impulsive — H sẽ có SK gần 0.",
+        "Most useful when BF has impulsive signature — H will have SK near 0.",
     )
 )
 cells.append(
@@ -374,7 +374,7 @@ cells.append(
 )
 cells.append(
     md(
-        "**Insight**: Với BF, kurtogram thường peak rõ trong dải 2–6 kHz (resonance band của bearing housing). Với H, SK thường gần 0 toàn dải — không có impulsive component.",
+        "**Insight**: For BF, the kurtogram typically peaks clearly in the 2–6 kHz range (bearing housing resonance). For H, SK is near 0 across the whole band — no impulsive component.",
     )
 )
 
@@ -383,15 +383,15 @@ cells.append(
     md(
         "### 9b. Cepstrum",
         "",
-        "Cepstrum = `IFFT(log|FFT(x)|)`. Domain output là **quefrency** (đơn vị: giây).",
+        "Cepstrum = `IFFT(log|FFT(x)|)`. The output domain is **quefrency** (unit: seconds).",
         "",
-        "Hữu ích để:",
-        "- **Phát hiện harmonic family**: harmonic series (1×, 2×, 3×, 4×, ...) trở thành **một peak duy nhất** ở quefrency = 1/fr",
-        "- **Sideband detection**: 2sf₁ sideband quanh f_line (broken bar) → peak ở quefrency 1/(2sf₁)",
+        "Useful for:",
+        "- **Harmonic family detection**: a harmonic series (1×, 2×, 3×, 4×, ...) becomes **a single peak** at quefrency = 1/fr",
+        "- **Sideband detection**: 2sf₁ sidebands around f_line (broken bar) → peak at quefrency 1/(2sf₁)",
         "",
-        "Compare 6 classes ở 30 Hz: kỳ vọng",
-        "- **MISAL** sẽ có peak rõ ở 1/30 = 33.3 ms (do 1×, 2× harmonic mạnh)",
-        "- **BROKEN** có peak ở 1/(2sf₁) (slip-dependent, vài chục ms)",
+        "Comparing 6 classes at 30 Hz, we expect:",
+        "- **MISAL** to show a clear peak at 1/30 = 33.3 ms (strong 1×, 2× harmonics)",
+        "- **BROKEN** to show a peak at 1/(2sf₁) (slip-dependent, tens of ms)",
     )
 )
 cells.append(
@@ -424,10 +424,10 @@ cells.append(
     md(
         "### 9c. Continuous Wavelet Transform (Morlet)",
         "",
-        "CWT cho **adaptive time-frequency resolution**: high-freq → narrow time window, low-freq → wide.",
-        "Ideal cho impulsive transients (BF) và slow modulation (BROKEN).",
+        "CWT provides **adaptive time-frequency resolution**: high-frequency → narrow time window, low-frequency → wide window.",
+        "Ideal for impulsive transients (BF) and slow modulation (BROKEN).",
         "",
-        "Dùng `pywt.cwt` với Complex Morlet wavelet. Compute trên một segment ngắn (4096 sample) để tránh memory issue.",
+        "We use `pywt.cwt` with the Complex Morlet wavelet. Compute on a short segment (4096 samples) to avoid memory issues.",
     )
 )
 cells.append(
@@ -460,18 +460,18 @@ cells.append(
 )
 cells.append(
     md(
-        "**So sánh STFT vs CWT**: CWT có high-freq band (BF resonance) sắc nét hơn, low-freq chi tiết tốt hơn. Tradeoff là compute.",
+        "**STFT vs CWT**: CWT shows the high-frequency band (BF resonance) more sharply and gives finer detail at low frequencies. Trade-off: compute cost.",
     )
 )
 
 # 9d WPT
 cells.append(
     md(
-        "### 9d. Wavelet Packet Transform — Energy Distribution",
+        "### 9d. Wavelet Packet Transform — energy distribution",
         "",
-        "WPT phân chia toàn dải fs/2 thành 2^L sub-band đều. Với L=4 → 16 sub-band, mỗi band rộng fs/(2·16) = 800 Hz.",
+        "WPT splits the full fs/2 band into 2^L equal sub-bands. With L=4 → 16 sub-bands, each Δf = fs/(2·16) = 800 Hz wide.",
         "",
-        "Energy mỗi band = Σ(coef²). Plot energy distribution per fault → fingerprint **rất compact** cho ML/DL.",
+        "Energy per band = Σ(coef²). Plotting energy distribution per fault gives a **very compact fingerprint** for ML/DL.",
     )
 )
 cells.append(
@@ -513,11 +513,11 @@ cells.append(
     md(
         "### 9e. Coherence vibration ↔ acoustic",
         "",
-        "**Coherence γ²(f) ∈ [0,1]** đo mức độ vibration và acoustic share thông tin tại tần số f.",
-        "- γ² ≈ 1 → hai modality redundant tại f đó",
-        "- γ² ≈ 0 → modality độc lập (cần fusion để bổ sung)",
+        "**Coherence γ²(f) ∈ [0,1]** measures how much vibration and acoustic share information at frequency f.",
+        "- γ² ≈ 1 → modalities are redundant at that f",
+        "- γ² ≈ 0 → modalities are independent (fusion brings genuine new information)",
         "",
-        "Plot coherence của H vs BF — kỳ vọng BF sẽ có coherence cao ở high-freq band do bearing impulse phát sóng cả mechanical lẫn airborne.",
+        "Plot coherence for H vs BF — we expect BF to have high coherence in the high-frequency band, since bearing impulses radiate both mechanically and through the air.",
     )
 )
 cells.append(
@@ -532,8 +532,8 @@ cells.append(
         "axes[-1].set_xlabel('Frequency (Hz)')",
         "fig.suptitle('Coherence vibration X ↔ acoustic — H vs BF @ 30 Hz')",
         "plt.tight_layout(); plt.savefig(FIG_DIR / 'coherence_H_vs_BF.png'); plt.show()",
-        "print('High coherence band → modality redundancy')",
-        "print('Low coherence band → fusion brings genuine new info')",
+        "print('High-coherence band -> modality redundancy')",
+        "print('Low-coherence band -> fusion brings genuine new info')",
     )
 )
 
@@ -542,8 +542,8 @@ cells.append(
     md(
         "### 9f. Cross-condition spectrum — same fault, 4 speeds",
         "",
-        "Để **thấy tận mắt domain shift**: cùng class BF, 4 speeds khác nhau.",
-        "Kỳ vọng: peaks dịch chuyển thẳng tỷ lệ với speed → đó là pain-point chính của DG.",
+        "To **see the domain shift directly**: same class BF, 4 different speeds.",
+        "Expectation: peaks shift linearly with speed → this is the main DG pain point.",
     )
 )
 cells.append(
@@ -568,10 +568,10 @@ cells.append(
     md(
         "### 9g. Order spectrum — speed normalization",
         "",
-        "**Thay đổi trục frequency → trục order (số lần ÷ fr)**: peak tại 1× luôn ở order=1, peak tại 2× luôn ở order=2, bất kể speed.",
-        "→ Đây chính là cách kill domain shift trên rotating machinery.",
+        "**Replace the frequency axis → order axis (multiples of fr)**: the peak at 1× is always at order=1, the peak at 2× is always at order=2, regardless of speed.",
+        "→ This is exactly how to kill domain shift on rotating machinery.",
         "",
-        "Vì speed constant trong mỗi file, order spectrum chỉ đơn giản là FFT chia theo fr.",
+        "Since speed is constant within each file, the order spectrum is simply the FFT divided by fr.",
     )
 )
 cells.append(
@@ -584,7 +584,7 @@ cells.append(
         "    mask = orders <= n_orders",
         "    return orders[mask], X[mask]",
         "",
-        "# Compare 4 conditions of BF in order domain — peaks should align",
+        "# Compare 4 conditions of BF in the order domain - peaks should align",
         "fig, ax = plt.subplots(figsize=(12, 5))",
         "for c in CONDITIONS:",
         "    s = load_motor_file(DATA_DIR / f'BF_{c}HZ.txt')",
@@ -592,7 +592,7 @@ cells.append(
         "    Xnorm = X / X.max()",
         "    ax.plot(o, 20*np.log10(Xnorm + 1e-6), lw=0.7, label=f'{c} Hz', alpha=0.85)",
         "ax.set_xlabel('Order (× fr)'); ax.set_ylabel('Normalized magnitude (dB)')",
-        "ax.set_title('Order spectrum — BF across 4 working conditions (peaks align at integer orders)')",
+        "ax.set_title('Order spectrum - BF across 4 working conditions (peaks align at integer orders)')",
         "ax.legend(); ax.grid(alpha=0.3)",
         "ax.set_xlim(0, 20)",
         "for k in [1, 2, 3, 4, 5]: ax.axvline(k, color='k', lw=0.3, ls=':', alpha=0.5)",
@@ -609,8 +609,8 @@ cells.append(
     md(
         "## 10. Hilbert Envelope Spectrum — using kurtogram-selected band",
         "",
-        "Phối hợp 9a + HES: dùng kurtogram để chọn band, rồi compute envelope spectrum.",
-        "Kỳ vọng: BF có peak rõ tại f_BPFO (≈ 3.5×fr cho bearing thông dụng) và harmonics, còn H phẳng.",
+        "Combining 9a + HES: use the kurtogram to pick a band, then compute the envelope spectrum.",
+        "Expectation: BF shows clear peaks at f_BPFO (≈ 3.5×fr for typical bearings) and harmonics; H is flat.",
     )
 )
 cells.append(
@@ -631,8 +631,8 @@ cells.append(
         "    ax.plot(f, E, lw=0.7, color=CLASS_COLOR[cls])",
         "    ax.set_xlim(0, 500); ax.set_ylabel(f'{cls}\\n|env|'); ax.grid(alpha=0.3)",
         "    for k in [1, 2, 3, 4]: ax.axvline(k*30, color='k', lw=0.5, ls='--', alpha=0.4)",
-        "axes[-1].set_xlabel('Frequency (Hz)  — black dashed = k × fr')",
-        "fig.suptitle('Hilbert Envelope Spectrum — H vs BF (band 2–6 kHz)')",
+        "axes[-1].set_xlabel('Frequency (Hz)  - black dashed = k × fr')",
+        "fig.suptitle('Hilbert Envelope Spectrum - H vs BF (band 2-6 kHz)')",
         "plt.tight_layout(); plt.savefig(FIG_DIR / 'hes_H_vs_BF_30Hz.png'); plt.show()",
     )
 )
@@ -756,12 +756,12 @@ cells.append(
         "for cls in CLASSES:",
         "    m = labels == cls",
         "    axes[0].scatter(Z[m, 0], Z[m, 1], s=8, alpha=0.6, color=CLASS_COLOR[cls], label=cls)",
-        "axes[0].legend(loc='best', fontsize=9); axes[0].set_title('t-SNE — colored by CLASS')",
+        "axes[0].legend(loc='best', fontsize=9); axes[0].set_title('t-SNE - colored by CLASS')",
         "for d, mk in zip(CONDITIONS, ['o','s','^','D']):",
         "    m = domains == d",
         "    axes[1].scatter(Z[m, 0], Z[m, 1], s=8, alpha=0.6, marker=mk, label=f'{d} Hz')",
-        "axes[1].legend(loc='best', fontsize=9); axes[1].set_title('t-SNE — colored by CONDITION (domain)')",
-        "fig.suptitle('Feature space (50d) — 2D t-SNE')",
+        "axes[1].legend(loc='best', fontsize=9); axes[1].set_title('t-SNE - colored by CONDITION (domain)')",
+        "fig.suptitle('Feature space (50d) - 2D t-SNE')",
         "plt.tight_layout(); plt.savefig(FIG_DIR / 'tsne_features_X.png'); plt.show()",
     )
 )
@@ -773,12 +773,12 @@ cells.append(md("## 14. Per-class & cross-condition stats"))
 cells.append(
     code(
         "agg = df[df['channel'] == 'X'].groupby('class')[['t_kurt','t_crest','t_rms']].mean().reindex(CLASSES)",
-        "print('Mean per class — vibration X:'); print(agg.round(3))",
+        "print('Mean per class - vibration X:'); print(agg.round(3))",
         "fig, axes = plt.subplots(1, 3, figsize=(13, 4))",
         "for ax, col in zip(axes, ['t_kurt','t_crest','t_rms']):",
         "    ax.bar(agg.index, agg[col], color=[CLASS_COLOR[c] for c in agg.index])",
         "    ax.set_title(col); ax.tick_params(axis='x', rotation=45); ax.grid(axis='y', alpha=0.3)",
-        "fig.suptitle('Mean per class — pooled across conditions')",
+        "fig.suptitle('Mean per class - pooled across conditions')",
         "plt.tight_layout(); plt.savefig(FIG_DIR / 'per_class_stats.png'); plt.show()",
         "",
         "rms_by_cond = df[df['channel'] == 'X'].groupby(['class','condition'])['t_rms'].mean().unstack().reindex(CLASSES)",
@@ -788,7 +788,7 @@ cells.append(
         "    ax.plot(CONDITIONS, rms_by_cond.loc[cls].values, '-o', color=CLASS_COLOR[cls], label=cls, lw=1.5)",
         "ax.set_xscale('log'); ax.set_yscale('log')",
         "ax.set_xlabel('Working condition (Hz)'); ax.set_ylabel('Mean RMS (vib X)')",
-        "ax.set_title('RMS scaling with speed — domain shift evidence')",
+        "ax.set_title('RMS scaling with speed - domain shift evidence')",
         "ax.legend(); ax.grid(alpha=0.3, which='both')",
         "plt.tight_layout(); plt.savefig(FIG_DIR / 'rms_vs_condition.png'); plt.show()",
     )
@@ -802,7 +802,7 @@ cells.append(
         "## 15. Segmentation utility — splits.npz",
         "",
         "Time-block split per file: train 0–70%, val 70–85%, test 85–100% → no leakage.",
-        "Output `splits.npz` chứa `train/val/test_X_vib (N,4096,3)`, `_X_ac (N,4096,1)`, `_y_class`, `_y_domain`.",
+        "Output `splits.npz` contains `train/val/test_X_vib (N,4096,3)`, `_X_ac (N,4096,1)`, `_y_class`, `_y_domain`.",
     )
 )
 cells.append(
@@ -854,20 +854,20 @@ cells.append(
     md(
         "## 16. Baseline experiments",
         "",
-        "Baselines được chạy bởi script `_run_pipeline.py` (XGBoost + WDCNN + DualStreamCNN).",
-        "Notebook này load và visualize kết quả từ `baseline_results.json`.",
+        "Baselines are run by `_run_pipeline.py` (XGBoost + WDCNN + DualStreamCNN).",
+        "This notebook loads and visualizes the results from `baseline_results.json`.",
         "",
-        "**3 setups** được đánh giá:",
-        "1. **Intra-condition**: train/test cùng 1 condition, 70/30 time-block",
-        "2. **Pooled**: trộn 4 conditions, 70/30 time-block per file",
-        "3. **Leave-One-Condition-Out (LOCO)**: train 3 conditions, test 1 → cross-condition DG",
+        "**Three setups** are evaluated:",
+        "1. **Intra-condition**: train/test on the same condition, 70/30 time-block",
+        "2. **Pooled**: mix all 4 conditions, 70/30 time-block per file",
+        "3. **Leave-One-Condition-Out (LOCO)**: train on 3 conditions, test on 1 → cross-condition DG",
     )
 )
 cells.append(
     code(
         "RESULTS = ROOT / 'baseline_results.json'",
         "if not RESULTS.exists():",
-        "    print('Chưa có kết quả. Chạy: python _run_pipeline.py'); raise SystemExit",
+        "    print('No results yet. Run: python _run_pipeline.py'); raise SystemExit",
         "with open(RESULTS) as f:",
         "    R = json.load(f)",
         "print('Loaded baseline_results.json'); print('keys:', list(R.keys())[:8])",
@@ -889,7 +889,7 @@ cells.append(
         "print(f\"\\nXGB intra mean acc:  {R['xgb_intra_mean_acc']:.4f}\")",
         "print(f\"XGB pooled acc:      {R['xgb_pooled']['acc']:.4f}\")",
         "print(f\"XGB LOCO mean acc:   {R['xgb_loco_mean_acc']:.4f}\")",
-        "print(f\"XGB LOCO worst acc:  {R['xgb_loco_worst_acc']:.4f}  ← real DG metric\")",
+        "print(f\"XGB LOCO worst acc:  {R['xgb_loco_worst_acc']:.4f}  <- real DG metric\")",
     )
 )
 
@@ -932,7 +932,7 @@ cells.append(
         "          R['wdcnn_ac_pooled']['acc'], R['dualstream_pooled']['acc']]",
         "axes[0].bar(labels_p, vals_p, color=['#3a86ff', '#06d6a0', '#ffd166', '#ef476f'])",
         "axes[0].set_ylim(0.5, 1.02); axes[0].set_ylabel('Test accuracy')",
-        "axes[0].set_title('Pooled (intra-domain) — all >99% except acoustic-only')",
+        "axes[0].set_title('Pooled (intra-domain) - all >99% except acoustic-only')",
         "axes[0].grid(axis='y', alpha=0.3)",
         "for i, v in enumerate(vals_p):",
         "    axes[0].text(i, v + 0.005, f'{v:.3f}', ha='center', fontsize=9)",
@@ -947,13 +947,13 @@ cells.append(
         "axes[1].bar(x + w, ds_loco_v, w, label='DualStream', color='#ef476f')",
         "axes[1].set_xticks(x); axes[1].set_xticklabels([f'{c}Hz' for c in CONDITIONS])",
         "axes[1].set_ylabel('Test accuracy on unseen domain')",
-        "axes[1].set_title('Leave-One-Condition-Out — DG drops sharply (5Hz catastrophic for XGBoost)')",
+        "axes[1].set_title('Leave-One-Condition-Out - DG drops sharply (5Hz catastrophic for XGBoost)')",
         "axes[1].axhline(1/6, color='k', ls=':', lw=0.6, alpha=0.5)",
         "axes[1].text(3.4, 1/6 + 0.02, 'chance', fontsize=8)",
         "axes[1].legend(loc='lower left', fontsize=9); axes[1].grid(axis='y', alpha=0.3)",
         "axes[1].set_ylim(0, 1.02)",
         "",
-        "fig.suptitle('Baseline experiments — pooled vs cross-condition DG')",
+        "fig.suptitle('Baseline experiments - pooled vs cross-condition DG')",
         "plt.tight_layout(); plt.savefig(FIG_DIR / 'baseline_summary.png'); plt.show()",
     )
 )
@@ -961,24 +961,24 @@ cells.append(
 # 16d Key findings
 cells.append(
     md(
-        "### 16d. Key findings từ baseline",
+        "### 16d. Key findings from baselines",
         "",
-        "1. **Intra-condition đã saturate**: XGBoost 98.4%, WDCNN 99.3%. Không còn nhiều dư địa cải tiến nội-domain.",
+        "1. **Intra-condition is saturated**: XGBoost 98.4%, WDCNN 99.3%. Little headroom intra-domain.",
         "",
-        "2. **Pooled cũng saturate** (~100%): trộn 4 conditions vẫn dễ, vì model học mỗi condition như một feature mode riêng.",
+        "2. **Pooled is also saturated** (~100%): mixing 4 conditions is still easy because the model treats each condition as a separate feature mode.",
         "",
-        "3. **Cross-condition DG là vấn đề thực sự**:",
-        "   - XGBoost LOCO mean = 69.7%, **worst = 21.3%** (test=5Hz, gần chance level 16.7%)",
+        "3. **Cross-condition DG is the real challenge**:",
+        "   - XGBoost LOCO mean = 69.7%, **worst = 21.3%** (test=5Hz, near chance level 16.7%)",
         "   - WDCNN vib LOCO mean = 89.0%, worst = 76.9%",
         "   - DualStream LOCO mean = 82.0%, worst = 62.2%",
         "",
-        "4. **Naive multimodal HURT DG**: dual-stream tệ hơn vib-only. Lý do: acoustic SNR thấp ở low-speed, model bị lệch về mode tương ứng. → cần fusion thông minh (cross-attention + modality dropout + contrastive).",
+        "4. **Naive multimodal HURTS DG**: dual-stream is worse than vib-only. Reason: low acoustic SNR at low speed biases the model toward that mode → smarter fusion needed (cross-attention + modality dropout + contrastive).",
         "",
-        "5. **Acoustic-only yếu** (81%) — bổ sung chứ không thay thế vibration được.",
+        "5. **Acoustic-only is weak** (81%) — supplementary, not a replacement for vibration.",
         "",
-        "6. **5 Hz là điểm chết của XGBoost** — handcrafted feature ở các condition ≥10Hz không generalize cho 5Hz vì dynamic range và spectral position quá khác. Đây là evidence cụ thể cho việc cần **order tracking** hoặc **speed-aware adapter**.",
+        "6. **5 Hz is XGBoost's death zone** — handcrafted features computed at conditions ≥10Hz do not generalize to 5Hz because dynamic range and spectral position differ too much. This is concrete evidence that **order tracking** or a **speed-aware adapter** is needed.",
         "",
-        "→ **Hướng paper rõ ràng**: cross-condition DG + smart multimodal fusion + physics (order tracking).",
+        "→ **Clear paper direction**: cross-condition DG + smart multimodal fusion + physics (order tracking).",
     )
 )
 
@@ -989,7 +989,7 @@ cells.append(
     md(
         "## 17. Confusion matrix — XGBoost LOCO test=5Hz (failure case)",
         "",
-        "Để hiểu **đâu là class bị confuse** khi DG fail, retrain nhanh XGBoost cho setup này và plot confusion matrix.",
+        "To understand **which classes are confused** when DG fails, retrain XGBoost on this setup and plot the confusion matrix.",
     )
 )
 cells.append(
@@ -1024,7 +1024,7 @@ cells.append(
         "    for j in range(6):",
         "        ax.text(j, i, cm_arr[i, j], ha='center', va='center',",
         "                color='white' if cm_arr[i, j] > cm_arr.max()/2 else 'black', fontsize=9)",
-        "ax.set_title(f'XGBoost LOCO — train={{10,20,30}}Hz, test=5Hz  (acc={accuracy_score(y_all[te], pred):.3f})')",
+        "ax.set_title(f'XGBoost LOCO - train={{10,20,30}}Hz, test=5Hz  (acc={accuracy_score(y_all[te], pred):.3f})')",
         "plt.colorbar(im, ax=ax)",
         "plt.tight_layout(); plt.savefig(FIG_DIR / 'cm_xgb_loco_test5Hz.png'); plt.show()",
     )
@@ -1037,14 +1037,14 @@ cells.append(
     md(
         "## 18. Next steps",
         "",
-        "Notebook tiếp theo (`02_dg_baselines.ipynb`):",
-        "1. Order tracking layer (differentiable resampler) cho deep DG",
-        "2. Cross-modal attention (vib ↔ ac) thay cho concat",
+        "Next notebook (`02_dg_baselines.ipynb`):",
+        "1. Order-tracking layer (differentiable resampler) for deep DG",
+        "2. Cross-modal attention (vib ↔ ac) instead of concat",
         "3. DANN domain adversarial",
         "4. MixStyle augmentation",
-        "5. Concept Bottleneck — features từ Section 11 làm interpretable middle layer",
+        "5. Concept Bottleneck — features from Section 11 as an interpretable middle layer",
         "",
-        "Tham khảo `TECHNICAL_REPORT.md` cho roadmap đầy đủ.",
+        "See `TECHNICAL_REPORT.md` for the full roadmap.",
     )
 )
 
